@@ -1,0 +1,28 @@
+.body{
+    margin: 0;
+    padding-left: 100px;
+}
+.main{
+    display: flex;
+    
+}
+.navbar{
+    display: flex;
+    width: 70%;
+    gap: 30px;
+    padding-top: 30px;
+    padding-left: 30px;
+    
+}
+.nav2{
+    width:30%;
+    padding-top: 30px;
+    display: flex;
+    gap: 30px;  
+}
+.nav2 button{
+    border:0;
+    border-radius:50%;
+    height: 30px;
+    width: 30px;
+}

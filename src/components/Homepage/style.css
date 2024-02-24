@@ -1,0 +1,70 @@
+.body{
+    margin: 0;
+    padding-left: 100px;
+}
+.main{
+    display: flex;
+}
+.navbar{
+    display: flex;
+    width: 70%;
+    gap: 30px;
+    padding-top: 30px;
+    padding-left: 30px;
+    
+}
+.navbar Link{
+    text-decoration: none;
+    color: black;
+}
+.nav2{
+    width:30%;
+    padding-top: 30px;
+    display: flex;
+    gap: 30px;  
+}
+.nav2 button{
+    border:0;
+    border-radius:50%;
+    height: 30px;
+    width: 30px;
+}
+.main-section{
+    display: flex;
+    flex-direction: row;
+    
+}
+.section-a{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+.section-a h5{
+    color: #f47c7c;
+}
+.section-a h1{
+    color: #3e1f55;
+    font-family: '74px Sriracha,handwriting';
+    font-weight: bolder;
+    font-size: 300%;
+}
+.section-a p{
+    color: #4a4a4a;
+}
+.section-a button{
+    width: 20%;
+    margin-left: 50px;
+    height: 50px;
+    background-color: #f47c7c;
+    border: 0;
+    color: white;
+}
+.section-a button:hover{
+background: white;
+color: black;
+border: solid;
+}
+.section-b img{
+    width: 80%;
+    
+}

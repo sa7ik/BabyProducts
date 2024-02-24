@@ -1,0 +1,24 @@
+.mainf{
+    background: lightgray;
+    margin-top: 30px;
+    padding-top: 30px;
+    display: flex;
+    
+}
+.fot-1{
+    width: 25%;
+}
+.fot-2{
+    width: 25%;
+}
+.fot-3{
+    width: 25%;
+}
+.fot-4{
+    width: 25%;
+}
+.under{
+    background: lightgray;
+    padding: 30px;
+
+}
