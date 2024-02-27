@@ -8,13 +8,18 @@ import { Route, Routes } from 'react-router-dom'
 import LoginPage from '../User/LoginPage'
 import RegistrationPage from '../User/RegistrationPage'
 import Cart from '../pages/Cart'
+import App from '../../App'
+import Navbar from '../Header/Navbar'
+import ProductData from '../ProductData'
 
 export const context=createContext();
 const MainRouter = () => {
+    const [search,setSearch]=useState("")
+    const [Product,setProduct]=useState(ProductData)
     const [cartItems,setCartItems]=useState([]);
     const [total,setTotal]=useState([]);
     const [users,setUsers]=useState([{userName:"sabik@123",email:"sabik@email.com",password:"sabik321"}]);
-    
+    const [searchTerm,setSearchTerm]=useState("");
     const handleAddProduct=(product)=>{
         const productExist=cartItems.find((item)=> item.id===product.id);
         if(productExist){
@@ -39,12 +44,17 @@ const MainRouter = () => {
         }
     }
     const handleCartClearance=()=>{
+        
+        setCartItems([])
+    }
+    const buyProduct=()=>{
+        alert("Purchase Completed")
         setCartItems([])
     }
 
 const data = {
-    total,setTotal,users,setUsers,cartItems,setCartItems,handleAddProduct,handleRemoveProduct,handleCartClearance
-}
+    total,setTotal,users,setUsers,cartItems,setCartItems,buyProduct,handleAddProduct,handleRemoveProduct,handleCartClearance
+,searchTerm,setSearchTerm,search,setSearch,Product,setProduct}
 
         return (
         <div>
@@ -58,6 +68,7 @@ const data = {
                 <Route path='/Testimonial' element={<Testimonial />} />
                 <Route path='/ContactUs' element={<ContactUs />} />
                 <Route path='/AboutUs' element={<Aboutus />} />
+                
             </Routes>
             </context.Provider>
         </div>
