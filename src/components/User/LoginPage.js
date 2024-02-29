@@ -5,7 +5,7 @@ import { context } from '../Homepage/MainRouter';
 
 function LoginPage() {
     const navigate=useNavigate();
-    const {users,setUsers} = useContext(context)
+    const {users,setUsers,log,setLog} = useContext(context)
     const [userData,setUserData] = useState({
         
     })
@@ -35,7 +35,7 @@ function LoginPage() {
         }
     
         navigate('/')
-              
+              setLog(true)
     }   
 
     return (

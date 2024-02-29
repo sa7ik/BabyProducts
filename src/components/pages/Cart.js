@@ -3,8 +3,10 @@ import './Cart.css';
 import Navbar from '../Header/Navbar';
 import Footer from '../Footer/Footer';
 import { context } from '../Homepage/MainRouter';
+import { Link } from 'react-router-dom';
 
 function Cart() {
+  // const navigate=useNavigate();
   const {cartItems,setCartItems,}=useContext(context)
   const {handleCartClearance}=useContext(context)
   const {handleAddProduct} = useContext(context)
@@ -44,9 +46,9 @@ function Cart() {
         </div>
         <div class="card">
           <div class="card-body">
-            <button type="button" className="btn btn-warning btn-block btn-lg" onClick={buyProduct}
+          <Link to={"/Payment"}>  <button type="button" className="btn btn-warning btn-block btn-lg" onClick={handleCartClearance} 
             
-            >Proceed to Pay</button>
+            >Proceed to Pay</button></Link>
           
           </div>
         </div>
