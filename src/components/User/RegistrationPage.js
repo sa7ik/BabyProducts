@@ -9,10 +9,11 @@ const RegistrationPage = () => {
 const navigate=useNavigate();
 const {users,setUsers} = useContext(context)
 const [userData,setUserData] = useState({
-    userName:"",
-    email:"",
-    password:""
+  userName:"",
+  email:"",
+  password:""
 })
+console.log(userData);
 
 
     const handleRegistration=(e)=>{
@@ -25,9 +26,11 @@ const [userData,setUserData] = useState({
       const errors = validate(userData);
       setFormErrors(validate(userData));
         setIsSubmit(true);
-        setUsers([...users,userData])
+        
+       
           if (Object.keys(errors).length === 0) {
-      navigate("/LoginPage");
+            setUsers([...users,userData])
+            navigate("/LoginPage");
     }
 
     }

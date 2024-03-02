@@ -47,7 +47,29 @@ function Shop() {
   return false;
 }).map((val) => (
   <div className='template' key={val.id}>
-    <img src={val.Image} alt={val.name} />
+    <Card style={{ width: '18rem' }}>
+              <Card.Img variant="top" src={val.Image} />
+              <Card.Body>
+                <Card.Title> {val.name}</Card.Title>
+                <Card.Text>
+                  <p>Price:$ {val.price}</p>
+                </Card.Text>
+                 <Button
+      variant="primary"
+      onClick={() => handleAddProduct(product)}
+      style={{
+        background: "#0d6efd",
+        color: "white",
+        borderRadius: "10px",
+        padding: "10px",
+        cursor: "pointer",
+      }}>
+    
+              Add to Cart</Button>
+              </Card.Body>
+            </Card>
+
+    {/* <img src={val.Image} alt={val.name} />
     <h3>{val.name}</h3>
     <p>Price: ${val.price}</p>
     <Button
@@ -62,7 +84,7 @@ function Shop() {
       }}
     >
       Add to Cart
-    </Button>
+    </Button> */}
   </div>
 ))}
 

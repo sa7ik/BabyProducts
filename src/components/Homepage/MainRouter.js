@@ -14,6 +14,8 @@ import Navbar from '../Header/Navbar'
 import ProductData from '../ProductData'
 import Payment from '../pages/Payment'
 import ProductCard from '../pages/Admin/Products'
+import BasicExample from '../pages/Admin/AdminLogin'
+import UserDetails from '../pages/Admin/UserDetails'
 
 export const context=createContext();
 const MainRouter = () => {
@@ -23,6 +25,8 @@ const MainRouter = () => {
     const [cartItems,setCartItems]=useState([]);
     const [total,setTotal]=useState([]);
     const [users,setUsers]=useState([{userName:"sabik@123",email:"sabik@email.com",password:"sabik321"}]);
+    const [userData,setUserData] = useState([{userName:"sabik@123",email:"sabik@email.com",password:"sabik321"}
+    ]);
     const [searchTerm,setSearchTerm]=useState("");
     const [log,setLog] = useState()
     const handleAddProduct=(product)=>{
@@ -66,7 +70,7 @@ const MainRouter = () => {
 
 const data = {
     total,setTotal,users,setUsers,cartItems,setCartItems,buyProduct,handleAddProduct,handleRemoveProduct,handleCartClearance
-,searchTerm,setSearchTerm,search,setSearch,Product,setProduct,log,setLog}
+,searchTerm,setSearchTerm,search,setSearch,Product,setProduct,log,setLog,userData}
 
         return (
         <div>
@@ -83,6 +87,7 @@ const data = {
                 <Route path='/Payment' element={<Payment />} />
                 <Route path='/Admin' element={<AdminLogin />} />
                 <Route path='/productCard' element={<ProductCard />} />
+                <Route path='/userDetails' element={< UserDetails/>} />
                 
             </Routes>
             </context.Provider>

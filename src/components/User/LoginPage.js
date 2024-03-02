@@ -9,7 +9,7 @@ function LoginPage() {
     const [userData,setUserData] = useState({
         
     })
-
+    
     console.log(users);
 
     const Submit=(e)=>{
@@ -53,6 +53,8 @@ function LoginPage() {
                 <input type='password' placeholder='Password' onChange={(e)=>setUserData({...userData,password:e.target.value})}/><br />
                <button onClick={(e)=>Submit(e)} style={{ marginRight: "50px" }}>Login</button>
                 <Link to={"/Registration"}>Create Account?</Link>
+                <Link to={"/userDetails"}>user details?</Link>
+
             </div>
         </div>
     )

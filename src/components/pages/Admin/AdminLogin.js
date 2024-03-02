@@ -1,69 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import { useNavigate } from 'react-router-dom'
+import AdminData from "./AdminData";
+import "bootstrap/dist/css/bootstrap.min.css"
 
-const AdminLogin = () => {
-  const [email, setEmail] = useState('');
-  const [emailBlured, setEmailBlured] = useState(false);
-  const [valid, setValid] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const [password, setPassword] = useState('');
-  const [passwordBlured, setPasswordBlured] = useState(false);
+function AdminLogin() {
+  const [email,setEmail] = useState('')
+    const [password,setPassword] = useState('')
+    const admin = AdminData[0]
+    const Navigate=useNavigate()
 
-  const validate = () => {
-    setEmailBlured(true);
-    setPasswordBlured(true);
-
-    if (validEmail(email) && validPassword(password)) {
-      setValid(true);
-    }
-  };
-
-  const validEmail = (email) => {
-    const re = /(.+)@(.+){2,}\.(.+){2,}/;
-    return re.test(email.toLowerCase());
-  };
-
-  const validPassword = (password) => {
-    return password.length > 7;
-  };
-
-  const handleSubmit = () => {
-    validate();
-    if (valid) {
-      setSubmitted(true);
-    }
-  };
+    const handleSubmit=()=>{
+      if(admin.email ===email && admin.password === password){
+          alert("Login succesfully")
+          Navigate('/productCard')
+      }else{
+          alert('enter a valid email and password')
+      }
+          }
 
   return (
-    <div>
-      <label>
-        Email:<br/>
-        <input
-          type="text"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          onBlur={() => setEmailBlured(true)}
-        /><br/>
-        {emailBlured && !validEmail(email) && <span>Email is not valid</span>}
-      </label>
+    <Form>
+      <Form.Group className="mb-3" controlId="formBasicEmail">
+<Form.Label>Email address</Form.Label>
+<Form.Control type="email" placeholder="Enter email" onChange={(e)=>setEmail(e.target.value)}/>
+<Form.Text className="text-muted">
+We'll never share your email with anyone else.
+</Form.Text>
+</Form.Group>
 
-      <label>
-        Password:<br/>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          onBlur={() => setPasswordBlured(true)}
-        /><br/>
-        {passwordBlured && !validPassword(password) && (
-          <span>Password must be at least 8 characters long</span>
-        )}<br/>
-      </label>
-
-      <button onClick={handleSubmit}>Submit</button>
-
-      {submitted && <p>Form submitted successfully!</p>}
-    </div>
+     <Form.Group className="mb-3" controlId="formBasicPassword">
+         <Form.Label>Password</Form.Label>
+         <Form.Control type="password" placeholder="Password" onChange={(e)=>setPassword(e.target.value)}/>
+       </Form.Group>
+       <Form.Group className="mb-3" controlId="formBasicCheckbox">
+         <Form.Check type="checkbox" label="Check me out" />
+       </Form.Group>
+       <Button variant="primary" type="submit" onClick={handleSubmit}>
+         Submit
+       </Button>
+     </Form>
   );
-};
+}
 
 export default AdminLogin;
