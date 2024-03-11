@@ -11,7 +11,9 @@ import './shop.css'
 
 function Shop() {
   const {handleAddProduct} = useContext(context)
+  const {Product,setProduct,logedUser,setLogedUser} = useContext(context);
   const {search,productData,product,searchTerm}=useContext(context)
+
 
   return (
     <div>
@@ -40,7 +42,7 @@ function Shop() {
      </div> */}
      
       <div className='products' style={{display:"flex",flexWrap:"wrap",justifyContent:'space-evenly' }}>
-         {ProductData.filter((val) => {
+         {Product.filter((val) => {
   if (searchTerm === "" || val.name.toLowerCase().includes(searchTerm.toLowerCase())) {
     return true;
   }
@@ -56,7 +58,7 @@ function Shop() {
                 </Card.Text>
                  <Button
       variant="primary"
-      onClick={() => handleAddProduct(product)}
+      onClick={() => handleAddProduct(val)}
       style={{
         background: "#0d6efd",
         color: "white",

@@ -14,7 +14,7 @@ function AdminLogin() {
     const handleSubmit=()=>{
       if(admin.email ===email && admin.password === password){
           alert("Login succesfully")
-          Navigate('/productCard')
+          Navigate('/AdminHome')
       }else{
           alert('enter a valid email and password')
       }

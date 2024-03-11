@@ -9,7 +9,7 @@ import { useContext, useState } from 'react'
 import { context } from '../Homepage/MainRouter';
 
 const Home = () => {
-  const { handleAddProduct } = useContext(context)
+  const { handleAddProduct,userData,setUserData } = useContext(context)
 
   return (
     <div>

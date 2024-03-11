@@ -9,6 +9,7 @@
       MDBTableBody,
     } from "mdb-react-ui-kit";
     import {context} from "../../Homepage/MainRouter";
+import AdminNav from "./AdminNav";
 
 
     const UserDetails = () => {
@@ -19,9 +20,10 @@
 
       return (
         <>
+        <AdminNav/>
         <div>
 
-          {/* <AdminNav/> */}
+          
         </div>
         
         <MDBTable align="middle" >
@@ -31,7 +33,7 @@
               <th scope="col">User</th>
               <th scope="col">UserName</th>
               <th scope="col">Email</th>
-              <th scope="col">Password</th>
+              
             </tr>
           </MDBTableHead>
           <MDBTableBody>
@@ -64,13 +66,13 @@
                     <MDBBadge color="primary" pill>
                       {user.email}
                     </MDBBadge>
-                  </td>
-                  <td>{user.password}</td>
-                  <td>
-                    <MDBBtn color="link" rounded size="sm">
+                   </td> 
+                  {/* <td>{user.password}</td>
+                  <td>  */}
+                    {/* <MDBBtn color="link" rounded size="sm">
                       Edit
-                    </MDBBtn>
-                  </td>
+                    </MDBBtn> */}
+                  {/* </td> */}
                 </tr>
               )
             )}

@@ -4,11 +4,25 @@ import ProductData from '../ProductData';
 import { Link, useNavigate } from 'react-router-dom';
 import { IoIosBasket, IoIosSearch, IoMdContact } from "react-icons/io";
 import { context } from '../Homepage/MainRouter';
+import { TbLogout } from "react-icons/tb";
+
 
 const Navbar = () => {
   const navigate = useNavigate()
   // const [searchTerm] = useState("")
-  const { cartItems, setCartItems, setSearchTerm } = useContext(context)
+  const { cartItems, setCartItems, setSearchTerm,log,setLog,userData,setUserData } = useContext(context)
+  const {userName}=userData;
+  
+  console.log(userData);
+  const Logout = () => {
+    // console.log("sabk")
+    setLog("");
+    setUserData({ userName:"",
+    email:"",
+    password:"",
+    cart:[]})
+    navigate("/");
+  };
 
   return (
     <div>
@@ -20,8 +34,8 @@ const Navbar = () => {
           <Link to={"/AboutUs"} style={{ textDecoration: "none", color: "black" }}>About Us</Link>
           <Link to={"/Testimonial"} style={{ textDecoration: "none", color: "black" }}>Testimonial</Link>
           <Link to={"/ContactUs"} style={{ textDecoration: "none", color: "black" }}>Contact Us</Link>
-        </div>
-        <div className='nav2'>
+        {/* </div> */}
+        {/* <div className='nav2'> */}
           <form action='' className='search-bar'>
             <input type='text' placeholder='Search products...' onChange={(event) => {
               setSearchTerm(event.target.value);
@@ -30,7 +44,9 @@ const Navbar = () => {
             <button type='submit'><IoIosSearch style={{ fontSize: "30px", color: "#f47c7c" }} /></button>
           </form>
           <Link to={"/Cart"}><IoIosBasket style={{ fontSize: "30px", color: "#f47c7c" }} /></Link>
-          <span style={{ margin: "3px", fontSize: "14px", fontWeight: "700", verticalAlign: "super" }}>{cartItems.length === 0 ? "" : cartItems.length}</span>
+          <span style={{ margin: "3px", fontSize: "14px", fontWeight: "700", verticalAlign: "super" }}>{userData?.cart?.length === 0 ? "" : userData?.cart?.length}</span>
+          {log && (<button onClick={Logout}><TbLogout /></button>)}
+         <span> {userName}</span>
           <Link to={"/Loginpage"}><IoMdContact style={{ fontSize: "30px", color: "#f47c7c" }} /></Link>
         </div>
       </div>

@@ -1,23 +1,31 @@
 import React, { useContext, useState,useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { context } from '../Homepage/MainRouter';
+import {
+  MDBBtn,
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBCard,
+  MDBCardBody,
+  MDBCardImage,
+  MDBInput,
+  MDBIcon,
+  MDBCheckbox,
+} from "mdb-react-ui-kit";
 const RegistrationPage = () => {
-    // const initialValues = { username: "", email: "", password: "" };
-    // const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
 const navigate=useNavigate();
-const {users,setUsers} = useContext(context)
-const [userData,setUserData] = useState({
-  userName:"",
-  email:"",
-  password:""
-})
-console.log(userData);
+const {users,setUsers,userData,setUserData} = useContext(context)
+
+// console.log(userData);
+
 
 
     const handleRegistration=(e)=>{
       e.preventDefault();
+      console.log(userData);
 
       // if (userData.userName === '') {
       //   alert("username must fill");
@@ -30,7 +38,9 @@ console.log(userData);
        
           if (Object.keys(errors).length === 0) {
             setUsers([...users,userData])
+            localStorage.setItem('user',users);
             navigate("/LoginPage");
+            console.log(userData);
     }
 
     }
@@ -60,53 +70,109 @@ console.log(userData);
         }
         return errors;
       };
-    console.log(userData)
-    console.log(users)
+   
       return (
-        <div className='header'
-         style={{
-            height: "100vh",
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            background: "white"
-        }}>
+     
+      <div>
+      <MDBContainer fluid>
+        <MDBCard className="text-black m-5" style={{ borderRadius: "25px" }}>
+          <MDBCardBody>
+            <MDBRow>
+              <MDBCol
+                md="10"
+                lg="6"
+                className="order-2 order-lg-1 d-flex flex-column align-items-center"
+              >
+                <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
+                  Sign up
+                </p>
+                <form onSubmit={handleRegistration}>
+                  <div className="d-flex flex-row align-items-center mb-4 ">
+                    <MDBIcon fas icon="user me-3" size="lg" />
+                    <MDBInput
+                      label="Your Name"
+                      id="form1"
+                      name="username"
+                      type="text"
+                      className="w-100"
+                      value={userData.userName}
+                      onChange={(e)=>setUserData({...userData,userName:e.target.value})}
+                    />
+                  </div>
+                  <p className="text-danger">{formErrors.userName}</p>
+                  <div className="d-flex flex-row align-items-center mb-4">
+                    <MDBIcon fas icon="envelope me-3" size="lg" />
+                    <MDBInput
+                      label="Your Email"
+                      id="form2"
+                      name="email"
+                      type="email"
+                      value={userData.email}
+                      onChange={(e)=>setUserData({...userData,email:e.target.value})}
+                    />
+                  </div>
+                  <p className="text-danger">{formErrors.email}</p>
+                  <div className="d-flex flex-row align-items-center mb-4">
+                    <MDBIcon fas icon="lock me-3" size="lg" />
+                    <MDBInput
+                      label="Password"
+                      id="form3"
+                      name="password"
+                      type="password"
+                      value={userData.password}
+                      onChange={(e)=>setUserData({...userData,password:e.target.value})}
+                    />
+                  </div>
+                  <p className="text-danger">{formErrors.password}</p>
+                  <div className="d-flex flex-row align-items-center mb-4">
+                    <MDBIcon fas icon="key me-3" size="lg" />
+                  </div>
+                  {/* <div className="d-flex flex-row align-items-center mb-4">
+                    <MDBIcon fas icon="lock me-3" size="lg" />
+                    <MDBInput
+                      label="confirm Password"
+                      id="form4"
+                      name="password1"
+                      type="password"
+                      value={formValue.password1}
+                      onChange={handleChange}
+                    />
+                  </div> */}
+                  <p className="text-danger">{formErrors.password1}</p>
+                  <div className="d-flex flex-row align-items-center mb-4">
+                    <MDBIcon fas icon="key me-3" size="lg" />
+                  </div>
 
-            <div className="container">
-      {/* {Object.keys(formErrors).length === 0 && isSubmit ? (
+                  <div className="mb-4">
+                    <MDBCheckbox
+                      name="flexCheck"
+                      value=""
+                      id="flexCheckDefault"
+                      label="agree with continue?"
+                    />
+                  </div>
 
+                  <MDBBtn className="mb-4" size="lg">
+                    register
+                  </MDBBtn>
+                </form>
+              </MDBCol>
 
-        <div className="ui message success">Signed in successfully</div>
-      ) : (
-        <pre>{JSON.stringify(userData, undefined, 2)}</pre>
-      )} */}
-
-        <form onSubmit={handleRegistration}>
-                <label>Username</label><br />
-                <input type="text" placeholder='name' 
-                  value={userData.userName}
-                onChange={(e)=>setUserData({...userData,userName:e.target.value})}
-                /><br />
-                <p style={{color:"red"}}>{formErrors.userName} </p>
-
-                <label>Email</label><br />
-                <input type='email' placeholder='Email'
-                value={userData.email}
-                 onChange={(e)=>setUserData({...userData,email:e.target.value})}/><br />
-                 <p style={{color:"red"}}>{formErrors.email} </p>
-                <label>Password</label><br />
-                <input type="password" placeholder='password' 
-                value={userData.password}
-                onChange={(e)=>setUserData({...userData,password:e.target.value})}/><br />
-                <p style={{color:"red"}}>{formErrors.password} </p>
-                <label>Confirm Password</label><br/>
-                <input type="password" placeholder='Confirm password' /><br />
-                <button onClick={handleRegistration}>Sign In</button>
-            {/* <Link to={"/LoginPage"}><button >Login</button></Link>    */}
-            </form>
-            </div>
-        </div>
-
+              <MDBCol
+                md="10"
+                lg="6"
+                className="order-1 order-lg-2 d-flex align-items-center"
+              >
+                <MDBCardImage
+                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
+                  fluid
+                />
+              </MDBCol>
+            </MDBRow>
+          </MDBCardBody>
+        </MDBCard>
+      </MDBContainer>
+    </div>
     )
 }
 
