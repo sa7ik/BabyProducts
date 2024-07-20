@@ -1,4 +1,4 @@
-    import React, { useContext } from "react";
+    import React, { useContext, useEffect, useState } from "react";
     // import AdminNav from "./Nav/AdminNav";
     import 'mdb-react-ui-kit/dist/css/mdb.min.css';
     import {
@@ -10,13 +10,27 @@
     } from "mdb-react-ui-kit";
     import {context} from "../../Homepage/MainRouter";
 import AdminNav from "./AdminNav";
+import { Axios } from "../../Homepage/MainRouter";
+import toast from "react-hot-toast";
+import { useParams } from "react-router-dom";
 
 
     const UserDetails = () => {
     //   const { userData } = useContext(myContext)
-    const {users} = useContext(context)
+    // const {users} = useContext(context)
+    const [userData,setUserData]=useState([])
+    const {userId}=useParams()
 
-    console.log(users)
+    useEffect(() => {
+      Axios.get("/admin/allusers", { withCredentials: true })
+        .then((response) => {setUserData(response.data)
+          console.log(response.data)
+        })
+        .catch((error) => {
+          console.error("User fetching error", error);
+          toast.error("User fetching error", error);
+        });
+    }, []);
 
       return (
         <>
@@ -37,7 +51,7 @@ import AdminNav from "./AdminNav";
             </tr>
           </MDBTableHead>
           <MDBTableBody>
-            {users.map((user, index) => 
+            {userData?.map((user, index) => 
                (
                 <tr key={index.id}>
                   <td>

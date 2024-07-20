@@ -1,6 +1,8 @@
 import React, { useContext, useState,useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import {useNavigate } from 'react-router-dom'
 import { context } from '../Homepage/MainRouter';
+import { Axios } from '../Homepage/MainRouter';
+import toast from 'react-hot-toast';
 import {
   MDBBtn,
   MDBContainer,
@@ -18,43 +20,52 @@ const RegistrationPage = () => {
     const [isSubmit, setIsSubmit] = useState(false);
 const navigate=useNavigate();
 const {users,setUsers,userData,setUserData} = useContext(context)
+const [formValue,setFormValue]=useState({
+  name:"",
+  email:"",
+  password:"",
+})
 
-// console.log(userData);
+const handleChange=(e)=>{
+  const {name,value}  =e.target;
+  setFormValue({...formValue,[name]:value})
+}
 
-
-
-    const handleRegistration=(e)=>{
-      e.preventDefault();
-      console.log(userData);
+    // const handleRegistration= (e)=>{
+    //   e.preventDefault();
+    //   console.log(formValue);
 
       // if (userData.userName === '') {
       //   alert("username must fill");
       //   return
       // }
-      const errors = validate(userData);
-      setFormErrors(validate(userData));
-        setIsSubmit(true);
+    //   const errors = validate(userData);
+    //   setFormErrors(validate(userData));
+    //     setIsSubmit(true);
         
        
-          if (Object.keys(errors).length === 0) {
-            setUsers([...users,userData])
-            localStorage.setItem('user',users);
-            navigate("/LoginPage");
-            console.log(userData);
-    }
+    //       if (Object.keys(errors).length === 0) {
+    //         setUsers([...users,userData])
+    //         localStorage.setItem('user',users);
+    //         navigate("/LoginPage");
+    //         console.log(userData);
+    // }
 
-    }
-    useEffect(() => {
-        console.log(formErrors);
-        if (Object.keys(formErrors).length === 0 && isSubmit) {
-          console.log(userData);
-        }
-      }, [formErrors]);
-      const validate = (values) => {
+    // }
+    // useEffect(() => {
+    //     console.log(formErrors);
+    //     if (Object.keys(formErrors).length === 0 && isSubmit) {
+    //       console.log(userData);
+    //     }
+    // }
+      
+      const validate = (e,values) => {  
+         e.preventDefault();
+        console.log(values)
         const errors = {};
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-        if (!values.userName) {
-          errors.userName = "Username is required!";
+        if (!values.name) {
+          errors.name = "Username is required!";
         }
         if (!values.email) {
           errors.email = "Email is required!";
@@ -68,9 +79,24 @@ const {users,setUsers,userData,setUserData} = useContext(context)
         } else if (values.password.length > 10) {
           errors.password = "Password cannot exceed more than 10 characters";
         }
-        return errors;
+        setFormErrors(errors);
+        if (Object.keys(errors).length === 0) {
+          try {
+            console.log("1234");
+            const response = Axios.post("/user/register", formValue, {
+              withCredentials:true
+            });
+            setUserData(formValue);
+            console.log(userData);
+            // toast.success(response.data.message);
+            // console.log(response.data.message)
+            navigate('/LoginPage');
+          } catch (error) {
+            // toast.error(error.response.data.message);
+          }
+        }
       };
-   
+    
       return (
      
       <div>
@@ -86,17 +112,16 @@ const {users,setUsers,userData,setUserData} = useContext(context)
                 <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
                   Sign up
                 </p>
-                <form onSubmit={handleRegistration}>
+                <form onSubmit={(e) => validate(e,formValue)}>
                   <div className="d-flex flex-row align-items-center mb-4 ">
                     <MDBIcon fas icon="user me-3" size="lg" />
                     <MDBInput
                       label="Your Name"
                       id="form1"
-                      name="username"
+                      name="name"
                       type="text"
                       className="w-100"
-                      value={userData.userName}
-                      onChange={(e)=>setUserData({...userData,userName:e.target.value})}
+                      onChange={handleChange}
                     />
                   </div>
                   <p className="text-danger">{formErrors.userName}</p>
@@ -107,8 +132,7 @@ const {users,setUsers,userData,setUserData} = useContext(context)
                       id="form2"
                       name="email"
                       type="email"
-                      value={userData.email}
-                      onChange={(e)=>setUserData({...userData,email:e.target.value})}
+                      onChange={handleChange}
                     />
                   </div>
                   <p className="text-danger">{formErrors.email}</p>
@@ -119,8 +143,7 @@ const {users,setUsers,userData,setUserData} = useContext(context)
                       id="form3"
                       name="password"
                       type="password"
-                      value={userData.password}
-                      onChange={(e)=>setUserData({...userData,password:e.target.value})}
+                      onChange={handleChange} 
                     />
                   </div>
                   <p className="text-danger">{formErrors.password}</p>

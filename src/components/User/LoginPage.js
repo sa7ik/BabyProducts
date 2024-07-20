@@ -8,10 +8,13 @@ import {
     MDBCol,
     MDBInput,
   } from "mdb-react-ui-kit";
+import { Axios } from '../Homepage/MainRouter';
+import Cookies from 'js-cookie';
 
 function LoginPage() {
     const navigate=useNavigate();
     const {users,userData,setUserData,log,setLog,setLogedUser} = useContext(context)
+    const [user, setUser] = useState({ email: "", password: "" });
     
     console.log(users);
 
@@ -24,23 +27,42 @@ function LoginPage() {
             return;
         }
 
-        
-        const checkUsers = users.find(
-            (ele) =>
-              ele.email === userData?.email && ele.password === userData?.password
-          );
-        
-        setUserData({...checkUsers})
-console.log("chexk",userData)
+        Axios.post("/user/login",user,{
+          withCredentials:true,
+        })
 
-        if(!checkUsers){
-            alert("no user found")
-            return;
-        }
+        .then((response)=>{
+          const { token, userData } = response.data;
+          // Cookies.set("token", token, { expires: 1 });
+          localStorage.setItem("token", token);
+          const userInfo = JSON.stringify(userData);
+          localStorage.setItem("userInfo", userInfo);
+          // alert.success(response.data.message);/
+          navigate('/')
+             setLog(true)
+             setUserData(user)
+        })
+
+        .catch((error)=>{
+          console.log("login error",error);
+        })
+        
+//         const checkUsers = users.find(
+//             (ele) =>
+//               ele.email === userData?.email && ele.password === userData?.password
+//           );
+        
+//         setUserData({...checkUsers})
+// console.log("chexk",userData)
+
+//         if(!checkUsers){
+//             alert("no user found")
+//             return;
+//         }
     
-        navigate('/')
-              setLog(true)
-              setLogedUser(checkUsers)
+//         navigate('/')
+//               setLog(true)
+//               setLogedUser(checkUsers)
     }   
 
     return (
@@ -65,7 +87,8 @@ console.log("chexk",userData)
                     id="form1"
                     type="email"
                     name="email"
-                    onChange={(e)=>setUserData({...userData,email:e.target.value})}
+                    value={user.email}
+                    onChange={(e) => setUser({ ...user, email: e.target.value })}
                   />
                   <MDBInput
                     wrapperClass="mb-4"
@@ -73,7 +96,8 @@ console.log("chexk",userData)
                     id="form2"
                     type="password"
                     name="password"
-                    onChange={(e)=>setUserData({...userData,password:e.target.value})}
+                    value={user.password}
+                  onChange={(e) => setUser({ ...user, password: e.target.value })}
                   />
 
                   <MDBBtn className="mb-4 w-100 gradient-custom-2">

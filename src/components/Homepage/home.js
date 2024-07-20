@@ -5,11 +5,47 @@ import Footer from '../Footer/Footer'
 import ProductData from '../ProductData';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import { Axios } from '../Homepage/MainRouter';
+import toast from 'react-hot-toast';
 import { useContext, useState } from 'react'
 import { context } from '../Homepage/MainRouter';
 
 const Home = () => {
-  const { handleAddProduct,userData,setUserData } = useContext(context)
+  const { handleAddProduct,userData,setUserData,log,AddToCart,proData } = useContext(context)
+
+  // useEffect(() => {
+  //   async function Data() {
+  //     await Axios.get("/user/product")
+  //       .then((response) => {
+  //         if (search === "") {
+  //           setProdata(response.data);
+  //         }
+  //         setProducts(response.data);
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error fetching Product", error);
+  //       });
+  //   }
+  //   Data();
+  // }, []);
+  
+  // const AddToCart = async (product) => {
+  //   console.log(userData);
+  //   if (log) {
+  //     await Axios.post(
+  //       "/user/addcart",
+  //       { productId: product.id},
+  //       { withCredentials: true }
+  //     )
+  //       .then((response) => {
+  //         toast.success("Product added to cart");
+  //       })
+  //       .catch((error) => {
+  //         toast.error("please login and continue");
+          
+  //       });
+  //   }
+  // };
 
   return (
     <div>
@@ -32,11 +68,11 @@ const Home = () => {
       </div>
       <h1>Collections</h1>
       <div className='products' style={{ display: "flex", flexWrap: "wrap", justifyContent: 'space-evenly' }}>
-        {ProductData.map((product) => {
+        {proData.map((product) => {
           return (
 
             <Card style={{ width: '18rem' }}>
-              <Card.Img variant="top" src={product.Image} />
+              <Card.Img variant="top" src={product.image} />
               <Card.Body>
                 <Card.Title> {product.name}</Card.Title>
                 <Card.Text>
@@ -44,7 +80,7 @@ const Home = () => {
                 </Card.Text>
                  <Button
       variant="primary"
-      onClick={() => handleAddProduct(product)}
+      onClick={() => AddToCart(product)}
       style={{
         background: "#0d6efd",
         color: "white",
